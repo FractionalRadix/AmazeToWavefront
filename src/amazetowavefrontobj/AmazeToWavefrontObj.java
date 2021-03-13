@@ -24,6 +24,14 @@ public class AmazeToWavefrontObj {
         print(rows);
         Maze maze = buildMaze(rows);
         maze.printAsWavefront();
+        
+        try {
+            maze.writeToWavefrontFile("maze2.obj");
+        }
+        catch (IOException exc) {
+            System.err.println("Tried to write maze to .obj file, but an error occurred.");
+            exc.printStackTrace();
+        }
     }
     
     static List<char[]> readFile(String filename)
