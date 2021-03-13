@@ -21,11 +21,8 @@ public class AmazeToWavefrontObj {
     public static void main(String[] args) {
 
         List<char[]> rows = readFile(args[0]);
-        
         print(rows);
-        
         Maze maze = buildMaze(rows);
-        
         maze.printAsWavefront();
     }
     
@@ -112,115 +109,5 @@ public class AmazeToWavefrontObj {
         }
               
         return maze;
-    }
-}
-
-class Maze
-{
-    private List<Vertex> vertices = new ArrayList<>();
-    private List<Polyline> polylines = new ArrayList<>();
-    private List<Face> faces = new ArrayList<>();
-    
-    public Maze()
-    {
-        
-    }
-    
-    public int addVertex(double x, double y, double z)
-    {
-        Vertex vertex = new Vertex(x, y, z);
-        vertices.add(vertex);
-        return vertices.size();
-    }
-    
-    public int addFace( int v0, int v1, int v2)
-    {
-        Face face = new Face(v0, v1, v2);
-        faces.add(face);
-        return faces.size();
-    }
-    
-    public int addPolyline(int... vertexIDs)
-    {
-        Polyline polyline = new Polyline(vertexIDs);
-        polylines.add(polyline);
-        return polylines.size();
-    }
-    
-    public void printAsWavefront() {
-        vertices.forEach(v -> {
-            System.out.println(v.exportToWavefront());
-        });
-        faces.forEach(f -> {
-            System.out.println(f.exportToWavefront());
-        });
-        polylines.forEach(l -> {
-            System.out.println(l.exportToWavefront());
-        });
-    }
-}
-
-class Polyline
-{
-    private int[] vertexIDs;
-    
-    public Polyline(int... vertexIDs)
-    {
-        this.vertexIDs = Arrays.copyOf(vertexIDs, vertexIDs.length);
-    }
-    
-    public String exportToWavefront() {
-        StringBuilder builder = new StringBuilder("l");
-        for(int vertexID : vertexIDs) {
-            builder.append(' ');
-            builder.append(vertexID);
-        }
-        return builder.toString();
-    }
-}
-
-/**
- * Stores a single triangle.
- * @author FractionalRadix
- */
-class Face
-{
-    private int[] vertexIDs = new int[3];
-    
-    public Face(int v0, int v1, int v2)
-    {
-        vertexIDs[0] = v0;
-        vertexIDs[1] = v1;
-        vertexIDs[2] = v2;        
-    }
-    
-    public String exportToWavefront() {
-       return "f " + vertexIDs[0] + " " + vertexIDs[1] + " " + vertexIDs[2];
-    }
-}
-
-/**
- * Keep track of a single Vertex.
- * @author FractionalRadix
- */
-class Vertex
-{
-    private double x, y, z, w;
-    
-    public Vertex(double x, double y, double z, double w) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
-    }
-    
-    public Vertex(double x, double y, double z) {
-        this(x, y, z, 1.0);
-    }
-    
-    public String exportToWavefront() {
-       return "v " + x + " " + y + " " + z + " " + w;
-       // Could use String.join but it's harder to read:
-       // return String.join(" ", "v ", ""+x,  ""+y,  ""+z,  ""+w);
     }
 }
