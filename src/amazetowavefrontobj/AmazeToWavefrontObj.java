@@ -81,31 +81,23 @@ public class AmazeToWavefrontObj {
                 switch(cols[colNr])
                 {
                     case '+':
-                       //TODO!+
+                        {
+                            // Add two half-width panels that extend in the direction of the X-axis.
+                            maze.addPanel2(rowNr, colNr - 0.5, rowNr, colNr + 0.0);
+                            maze.addPanel2(rowNr, colNr - 0.0, rowNr, colNr + 0.5);
+                            // Add two half-width panels that extend in the direction of the Y-axis.
+                            maze.addPanel1(rowNr - 0.5, colNr, rowNr + 0.0, colNr);
+                            maze.addPanel1(rowNr + 0.0, colNr, rowNr + 0.5, colNr);
+                        }
                         break;
                     case '-':
                         {
-                            int bottomLeftIdx  = maze.addVertex( rowNr, colNr , 0 );
-                            int bottomRightIdx = maze.addVertex( rowNr, colNr + 1.0, 0 );
-                            int topLeftIdx     = maze.addVertex( rowNr, colNr , 1 );
-                            int topRightIdx    = maze.addVertex( rowNr, colNr + 1.0, 1 );
-
-                            // Counter-clockwise
-                            maze.addFace(bottomLeftIdx, bottomRightIdx, topLeftIdx);
-                            maze.addFace(bottomRightIdx, topLeftIdx, topRightIdx);
-
-                            //maze.addPolyline(bottomLeftIdx, bottomRightIdx, topRightIdx, topLeftIdx);
+                            maze.addPanel2(rowNr, colNr - 0.5, rowNr, colNr + 0.5);
                         }
-                    break;
+                        break;
                     case '|':
                         {
-                            int bottomLeftIdx = maze.addVertex( rowNr, colNr, 0);
-                            int bottomRightIdx = maze.addVertex( rowNr + 1, colNr, 0);
-                            int topLeftIdx = maze.addVertex( rowNr, colNr, 1);
-                            int topRightIdx = maze.addVertex( rowNr + 1, colNr, 1);
-                            
-                            maze.addFace(bottomLeftIdx, bottomRightIdx, topLeftIdx);
-                            maze.addFace(bottomRightIdx, topLeftIdx, topRightIdx);
+                            maze.addPanel1(rowNr - 0.5, colNr, rowNr + 0.5, colNr);
                         }
                         break;
                     case ' ':

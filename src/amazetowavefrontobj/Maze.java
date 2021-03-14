@@ -88,20 +88,19 @@ class Maze
     }
 
     public void writeToWavefrontFile(String filename) throws IOException {
-        Writer fw = new PrintWriter(new File(filename));
-        
-        // Cannot use functional style, because the contents can throw an I/O Exception.
-        // (There are ways around that... but they make the code harder to understand).
-        String separator = System.getProperty("line.separator");
-        for (Vertex vertex : vertices) {
-            fw.write(vertex.exportToWavefront() + separator);
+        try (Writer fw = new PrintWriter(new File(filename))) {
+            // Cannot use functional style, because the contents can throw an I/O Exception.
+            // (There are ways around that... but they make the code harder to understand).
+            String separator = System.getProperty("line.separator");
+            for (Vertex vertex : vertices) {
+                fw.write(vertex.exportToWavefront() + separator);
+            }
+            for (Face face : faces) {
+                fw.write(face.exportToWavefront() + separator);
+            }
+            for (Polyline polyline : polylines) {
+                fw.write(polyline.exportToWavefront() + separator);
+            }
         }
-        for (Face face : faces) {
-            fw.write(face.exportToWavefront() + separator);
-        }
-        for (Polyline polyline : polylines) {
-            fw.write(polyline.exportToWavefront() + separator);
-        }
-        fw.close();
     }
 }
