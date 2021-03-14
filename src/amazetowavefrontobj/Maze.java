@@ -17,13 +17,19 @@ class Maze
     
     public int addVertex(double x, double y, double z)
     {
-        //TODO?~ Add a check if the vertex already exists, and re-use it?
-        //  That'll turn an O(1) operation into an O(n) operation (or O(n log n) if we use a smart algorithm).
-        //  And it may miss out a few vertices due to rounding error.
-        //  But it'll keep the file smaller, and it might decrease the nr of calculations the renderer has to do.
-        Vertex vertex = new Vertex(x, y, z);
-        vertices.add(vertex);
-        return vertices.size();
+        Vertex newVertex = new Vertex(x, y, z);  
+        
+        int pos;
+        
+        pos = vertices.indexOf(newVertex);
+        if (pos >= 0) {
+             // Remember that Wavefront's list of vertices is 1-based, not 0-based.
+            return pos + 1;
+        }
+
+        vertices.add(newVertex);
+        pos = vertices.size();
+        return pos;
     }
     
     public int addFace( int v0, int v1, int v2)
